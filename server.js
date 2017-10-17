@@ -62,6 +62,38 @@ app.get("/api/visitors", function (request, response) {
   });
 });
 
+/**
+ * Endpoint to get a JSON array of all the visitors in the database
+ * REST API example:
+ * <code>
+ * GET http://localhost:3000/api/inspectest
+ * </code>
+ *
+ * Response:
+ * [ "Bob", "Jane" ]
+ * @return An array of all the visitor names
+ */
+app.get("/api/inspectest", function (request, response) {
+
+  var exec = require('child_process').exec;
+  exec("/home/ibmadmin/git/inspec_sec/scripts/checkComplianceOnHosts.sh /home/ibmadmin/git/inspec_sec/scripts/host.swis", function (error, stdout, stderr) {
+    if (stdout != null && stdout != "") {
+      console.log("stdout: " + stdout);
+      stdout2 = stdout;
+    }
+    if (error != null && error != "") {
+      console.log("error: " + error);
+    }
+    if (stderr != null && stderr != "") {
+      console.log("stderr: " + stderr);
+    }
+    // response.write(stdout);
+    // response.end();
+    response.json(stdout);
+    return;
+  });
+
+});
 
 // load local VCAP configuration  and service credentials
 var vcapLocal;
