@@ -21,7 +21,7 @@ app.post("/api/visitors", function (request, response) {
   var userName = request.body.name;
   if(!mydb) {
     console.log("No database.");
-    response.send("Hello " + userName + "!");
+    response.send("Hello " + userName + " from Chris!");
     return;
   }
   // insert the username as a document
